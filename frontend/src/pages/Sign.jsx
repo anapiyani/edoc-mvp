@@ -177,7 +177,7 @@ export default function Sign() {
         <div className="sign-container">
           <div className="sign-message sign-message--error">
             <IconAlert />
-            <span>Missing document token.</span>
+            <span>No token for the document...</span>
           </div>
         </div>
       </div>
@@ -193,10 +193,8 @@ export default function Sign() {
     <div className="sign-page">
       <div className="sign-container">
         <header className="sign-header">
-          <h1 className="sign-title">Sign document</h1>
-          <p className="sign-subtitle">
-            Review the PDF below, then accept or reject.
-          </p>
+          <h1 className="sign-title">SIGN DOCUMENT</h1>
+          <p className="sign-subtitle">Принятие или отклонение документа</p>
         </header>
 
         {/* PDF shown immediately when page opens – no wait for document info */}
@@ -224,7 +222,7 @@ export default function Sign() {
             <section className="sign-card">
               <div className="sign-card-title">
                 <IconFile />
-                <span>Document info</span>
+                <span>Info:</span>
               </div>
               <div className="sign-grid">
                 <div className="sign-field">
@@ -274,7 +272,7 @@ export default function Sign() {
                 className="sign-btn sign-btn--outline"
               >
                 <IconDownload />
-                <span>Download PDF</span>
+                <span>Download pdf</span>
               </a>
               <button
                 type="button"
