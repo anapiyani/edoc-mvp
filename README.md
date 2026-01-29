@@ -32,15 +32,18 @@ curl -X POST http://localhost:8000/api/bitrix/documents/ \
 ```
 
 Expected response:
+
 - JSON with `sign_url` (e.g. `http://localhost:3000/sign/<token>`) and `status=awaiting_decision`.
 
 ## 2) Client page
 
 Open the returned `sign_url` in the browser:
+
 - PDF is displayed
 - PDF can be downloaded
 - Accept / Reject buttons are available
 
 ## Notes
+
 - Files are stored locally in `backend/media/`.
 - Default DB: SQLite (`backend/db.sqlite3`).
