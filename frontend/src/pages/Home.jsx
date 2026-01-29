@@ -16,9 +16,9 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Frontend is running</h1>
+      <h1>front health</h1>
       <p>
-        Backend health:{" "}
+        backend health:{" "}
         {error
           ? `Error: ${error}`
           : health

@@ -72,6 +72,9 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
+# Frontend base URL (для sign_url в ответах)
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000').rstrip('/')
+
 # CORS: allow frontend
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
