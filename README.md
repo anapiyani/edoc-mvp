@@ -10,8 +10,7 @@ python manage.py migrate
 python manage.py runserver 8000
 ```
 
-- **Backend:** http://localhost:8000
-- **Health:** http://localhost:8000/api/health/
+- **Backend:** [http://localhost:8000/](http://localhost:8000/api/docs/#/bitrix/bitrix_documents_create)
 
 ## Run frontend
 
@@ -22,7 +21,5 @@ npm run dev
 ```
 
 - **Frontend:** http://localhost:3000
-- **Home:** http://localhost:3000/
-- **Sign placeholder:** http://localhost:3000/sign/testtoken
 
-Start the backend first so the home page can show the health check result. CORS and proxy are set so the frontend can call the backend without CORS issues.
+Start the backend first so the home page can show the health check result :)
