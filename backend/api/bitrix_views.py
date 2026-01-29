@@ -3,6 +3,7 @@
 POST /api/bitrix/documents/ — multipart/form-data.
 """
 from django.conf import settings
+from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -70,6 +71,7 @@ def is_pdf_file(uploaded_file):
             },
         },
         400: {'description': 'Validation error'},
+        409: {'description': 'Document with this deal_id and doc_id already exists'},
     },
 )
 @api_view(['POST'])
@@ -103,14 +105,37 @@ def bitrix_document_upload(request):
             {'error': ' '.join(errors)},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    doc = BitrixDocument(
-        deal_id=deal_id,
-        doc_id=doc_id,
-        full_name=full_name or '',
-        iin=iin or '',
-        file=uploaded_file,
-    )
-    doc.save()
+
+    if BitrixDocument.objects.filter(deal_id=deal_id, doc_id=doc_id).exists():
+        return Response(
+            {'error': 'A document with this deal_id and doc_id already exists.'},
+            status=status.HTTP_409_CONFLICT,
+        )
+
+    try:
+        doc = BitrixDocument(
+            deal_id=deal_id,
+            doc_id=doc_id,
+            full_name=full_name or '',
+            iin=iin or '',
+            file=uploaded_file,
+        )
+        doc.save()
+    except IntegrityError:
+        return Response(
+            {'error': 'A document with this deal_id and doc_id already exists.'},
+            status=status.HTTP_409_CONFLICT,
+        )
+    except OSError as e:
+        return Response(
+            {'error': f'Failed to save file: {str(e)}'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+    except Exception as e:
+        return Response(
+            {'error': 'Failed to create document. Please try again.'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
     sign_url = f"{settings.FRONTEND_URL}/sign/{doc.token}"
 
@@ -121,5 +146,6 @@ def bitrix_document_upload(request):
             'sign_url': sign_url,
             'status': doc.status,
         },
-        status=status.HTTP_201_CREATED,
+        # Spec says 200; 201 is also reasonable, but keep it strict.
+        status=status.HTTP_200_OK,
     )

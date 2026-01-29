@@ -82,7 +82,6 @@ def document_file(request, token):
             content = fh.read()
         response = HttpResponse(content, content_type='application/pdf')
         response['Content-Disposition'] = 'inline; filename="document.pdf"'
-        response['X-Frame-Options'] = 'SAMEORIGIN'  # allow embedding in iframe on same origin
         return response
     except Exception:
         return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)

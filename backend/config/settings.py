@@ -65,6 +65,9 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Allow embedding PDF in frontend iframe (served via Vite proxy => same origin)
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # DRF + OpenAPI schema
